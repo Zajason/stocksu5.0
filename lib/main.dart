@@ -1,7 +1,9 @@
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 void main() {
   return runApp(
@@ -19,8 +21,16 @@ void main() {
 }
 
 class MainUI extends StatefulWidget {
+  const MainUI({Key? key}) : super(key: key);
   @override
   _MainUIState createState() => _MainUIState();
+}
+
+class Stock {
+  Stock(this.name, this.price, this.change);
+  final String name;
+  final double price;
+  final double change;
 }
 
 class _MainUIState extends State<MainUI> {
@@ -83,10 +93,15 @@ class _MainUIState extends State<MainUI> {
                 Container(
                   color: Colors.blueGrey[500],
                   child: FlatButton(
+                      child: Text('BUY'),
+                      // Within the `FirstRoute` widget
                       onPressed: () {
-                        print('oops');
-                      },
-                      child: Text('BUY')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                              builder: (context) => InfoPage()),
+                        );
+                      }),
                 )
               ],
             ),
@@ -451,4 +466,125 @@ class _MainUIState extends State<MainUI> {
       ],
     );
   }
+}
+
+class InfoPage extends StatefulWidget {
+  const InfoPage({Key? key}) : super(key: key);
+
+  @override
+  _InfoPageState createState() => _InfoPageState();
+}
+
+class _InfoPageState extends State<InfoPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Expanded(
+          child: Container(
+            color: Colors.blueGrey[800],
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Image(
+                      image: AssetImage('images/microsoft.png'),
+                      height: 100,
+                      width: 100,
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Text(
+                      'MCF',
+                      style: TextStyle(fontSize: 50, color: Colors.white),
+                    ),
+                    Text(
+                      '(+0.25)',
+                      style: TextStyle(color: Colors.greenAccent, fontSize: 20),
+                    )
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 3.0,
+                      child: Divider(color: Colors.blueGrey),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Row(children: <Widget>[
+                  Expanded(child: Chart()),
+                ]),
+                SizedBox(
+                  height: 50,
+                ),
+                FlatButton(
+                    color: Colors.blueGrey[500],
+                    minWidth: 100,
+                    height: 50,
+                    onPressed: () {
+                      print('pipes');
+                    },
+                    child: Text('Purchase stock',
+                        style: TextStyle(color: Colors.white)))
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Chart extends StatefulWidget {
+  @override
+  _ChartState createState() => _ChartState();
+}
+
+class _ChartState extends State<Chart> {
+  late List<StockData> _chartData;
+  @override
+  void initState() {
+    _chartData = getChartData();
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: SfCartesianChart(
+      series: <ChartSeries>[
+        LineSeries<StockData, double>(
+            dataSource: _chartData,
+            xValueMapper: (StockData stockPrice, _) => stockPrice.year,
+            yValueMapper: (StockData stockPrice, _) => stockPrice.stockPrice)
+      ],
+    ));
+  }
+}
+
+List<StockData> getChartData() {
+  final List<StockData> chartData = [
+    StockData(2017, 400),
+    StockData(2018, 512),
+    StockData(2019, 467),
+    StockData(2020, 487),
+    StockData(2021, 644),
+  ];
+  return chartData;
+}
+
+class StockData {
+  StockData(this.year, this.stockPrice);
+  final double year;
+  final double stockPrice;
 }

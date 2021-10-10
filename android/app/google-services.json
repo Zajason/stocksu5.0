@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "701716238124",
+    "project_id": "stock-gr",
+    "storage_bucket": "stock-gr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701716238124:android:267fc6f42afb60379ea689",
+        "android_client_info": {
+          "package_name": "iasonaszakynthinos.iamrich.stocksu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701716238124-40u5t2s3n7ocmbq5s900osf1risj6rp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlR_Vzxa7WMMDrTohlVX86CvUPyuTssBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701716238124-40u5t2s3n7ocmbq5s900osf1risj6rp3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "701716238124-j5bre1080q8jo8vndoqb7oqe4bvuvuii.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "iasonaszakynthinos.iamrich.stocksu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
