@@ -18,7 +18,7 @@ void main() async {
             backgroundColor: Colors.blueGrey[800],
             centerTitle: true),
         body: Authentication(),
-        backgroundColor: Colors.blueGrey[500],
+        backgroundColor: Colors.blueGrey[400],
       ),
     ),
   );
