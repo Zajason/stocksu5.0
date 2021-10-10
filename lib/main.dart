@@ -1,11 +1,15 @@
 import 'dart:ui';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:stocksu/authentication.dart';
 import 'dart:math';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+
   return runApp(
     MaterialApp(
       home: Scaffold(
@@ -13,7 +17,7 @@ void main() {
             title: Text('MOST POPULAR'),
             backgroundColor: Colors.blueGrey[800],
             centerTitle: true),
-        body: MainUI(),
+        body: Authentication(),
         backgroundColor: Colors.blueGrey[500],
       ),
     ),
