@@ -5,6 +5,7 @@ import 'package:stocksu/main.dart';
 import 'dart:math';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:stocksu/flutterfire.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Authentication extends StatefulWidget {
   @override
@@ -25,24 +26,34 @@ class _AuthenticationState extends State<Authentication> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            TextFormField(
-              style: TextStyle(color: Colors.white),
-              controller: _emailfield,
-              decoration: InputDecoration(
-                  hintText: 'example@email.com',
-                  hintStyle: TextStyle(color: Colors.white),
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.white)),
+            Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1.25,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  controller: _emailfield,
+                  decoration: InputDecoration(
+                      hintText: 'example@email.com',
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
             ),
-            TextFormField(
-              style: TextStyle(color: Colors.white),
-              controller: _passwordfield,
-              obscureText: true,
-              decoration: InputDecoration(
-                  hintText: 'password',
-                  hintStyle: TextStyle(color: Colors.white),
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.white)),
+            Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1.25,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  controller: _passwordfield,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      hintText: 'password',
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
             ),
             Container(
               decoration: BoxDecoration(
@@ -55,7 +66,10 @@ class _AuthenticationState extends State<Authentication> {
                   bool shouldNavigate =
                       await Register(_emailfield.text, _passwordfield.text);
 
-                  if (shouldNavigate) {}
+                  if (shouldNavigate) {
+                    Navigator.push<void>(context,
+                        MaterialPageRoute(builder: (context) => MainUI()));
+                  }
                 },
                 child: Text('Sign Up '),
               ),
@@ -76,7 +90,7 @@ class _AuthenticationState extends State<Authentication> {
                         MaterialPageRoute(builder: (context) => MainUI()));
                   }
                 },
-                child: Text('Register'),
+                child: Text('Sign In'),
               ),
             )
           ],

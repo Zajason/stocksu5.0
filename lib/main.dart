@@ -5,10 +5,11 @@ import 'package:stocksu/authentication.dart';
 import 'dart:math';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
-  await Firebase.initializeApp();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   return runApp(
     MaterialApp(
@@ -40,434 +41,466 @@ class Stock {
 class _MainUIState extends State<MainUI> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          color: Colors.blueGrey[800],
-          alignment: Alignment.topLeft,
-          child: Text(
-            '         STOCK    PRICE           DIF  ',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        SizedBox(
-          height: 3.0,
-          child: Divider(color: Colors.blueGrey),
-        ),
-        Expanded(
-          child: Container(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lets make some money'),
+        backgroundColor: Colors.blueGrey[500],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
             color: Colors.blueGrey[800],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image(
-                  image: AssetImage('images/microsoft.png'),
-                  width: 25,
-                  height: 25,
+            alignment: Alignment.topLeft,
+            child: Row(children: <Widget>[
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 11,
+              ),
+              Text(
+                'stock',
+                style: TextStyle(
+                  color: Colors.white,
+                  height: MediaQuery.of(context).size.height / 200,
                 ),
-                SizedBox(
-                  width: 10,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 20,
+              ),
+              Text('price',
+                  style: TextStyle(
+                    color: Colors.white,
+                    height: MediaQuery.of(context).size.height / 200,
+                  )),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 10,
+              ),
+              Text(
+                "change",
+                style: TextStyle(
+                  color: Colors.white,
+                  height: MediaQuery.of(context).size.height / 200,
                 ),
-                Text(
-                  'MCF',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '450.78',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  '77,67%',
-                  style: TextStyle(color: Colors.redAccent),
-                ),
-                Icon(
-                  Icons.arrow_downward,
-                  color: Colors.redAccent,
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Container(
-                  color: Colors.blueGrey[500],
-                  child: FlatButton(
-                      child: Text('BUY'),
-                      // Within the `FirstRoute` widget
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                              builder: (context) => InfoPage()),
-                        );
-                      }),
-                )
-              ],
+              )
+            ]),
+          ),
+          SizedBox(
+            height: 3.0,
+            child: Divider(color: Colors.blueGrey),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey[800],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('images/microsoft.png'),
+                    width: 25,
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'MCF',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '450.78',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '77,67%',
+                    style: TextStyle(color: Colors.redAccent),
+                  ),
+                  Icon(
+                    Icons.arrow_downward,
+                    color: Colors.redAccent,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.blueGrey[500],
+                    child: FlatButton(
+                        child: Text('BUY'),
+                        // Within the `FirstRoute` widget
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                                builder: (context) => InfoPage()),
+                          );
+                        }),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blueGrey[800],
-            child: Row(
-              children: <Widget>[
-                Image(
-                  image: AssetImage('images/tesla.png'),
-                  width: 25,
-                  height: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'TSL',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '450.78',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  '34.62%',
-                  style: TextStyle(color: Colors.greenAccent),
-                ),
-                Icon(
-                  Icons.arrow_upward,
-                  color: Colors.greenAccent,
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Container(
-                  color: Colors.blueGrey[500],
-                  child: FlatButton(
-                      onPressed: () {
-                        print('oops');
-                      },
-                      child: Text('BUY')),
-                )
-              ],
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey[800],
+              child: Row(
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('images/tesla.png'),
+                    width: 25,
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'TSL',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '450.78',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '34.62%',
+                    style: TextStyle(color: Colors.greenAccent),
+                  ),
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.blueGrey[500],
+                    child: FlatButton(
+                        onPressed: () {
+                          print('oops');
+                        },
+                        child: Text('BUY')),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blueGrey[800],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image(
-                  image: AssetImage('images/facebook.png'),
-                  width: 25,
-                  height: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'FCB',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '450.78',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  '24.03%',
-                  style: TextStyle(color: Colors.greenAccent),
-                ),
-                Icon(
-                  Icons.arrow_upward,
-                  color: Colors.greenAccent,
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Container(
-                  color: Colors.blueGrey[500],
-                  child: FlatButton(
-                      onPressed: () {
-                        print('oops');
-                      },
-                      child: Text('BUY')),
-                )
-              ],
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey[800],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('images/facebook.png'),
+                    width: 25,
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'FCB',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '450.78',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '24.03%',
+                    style: TextStyle(color: Colors.greenAccent),
+                  ),
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.blueGrey[500],
+                    child: FlatButton(
+                        onPressed: () {
+                          print('oops');
+                        },
+                        child: Text('BUY')),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blueGrey[800],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image(
-                  image: AssetImage('images/google.png'),
-                  width: 25,
-                  height: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'GGL',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '450.78',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  '12.34%',
-                  style: TextStyle(color: Colors.greenAccent),
-                ),
-                Icon(
-                  Icons.arrow_upward,
-                  color: Colors.greenAccent,
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Container(
-                  color: Colors.blueGrey[500],
-                  child: FlatButton(
-                      onPressed: () {
-                        print('oops');
-                      },
-                      child: Text('BUY')),
-                )
-              ],
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey[800],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('images/google.png'),
+                    width: 25,
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'GGL',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '450.78',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '12.34%',
+                    style: TextStyle(color: Colors.greenAccent),
+                  ),
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.blueGrey[500],
+                    child: FlatButton(
+                        onPressed: () {
+                          print('oops');
+                        },
+                        child: Text('BUY')),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blueGrey[800],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image(
-                  image: AssetImage('images/google.png'),
-                  width: 25,
-                  height: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'GGL',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '450.78',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  '12.34%',
-                  style: TextStyle(color: Colors.greenAccent),
-                ),
-                Icon(
-                  Icons.arrow_upward,
-                  color: Colors.greenAccent,
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Container(
-                  color: Colors.blueGrey[500],
-                  child: FlatButton(
-                      onPressed: () {
-                        print('oops');
-                      },
-                      child: Text('BUY')),
-                )
-              ],
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey[800],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('images/google.png'),
+                    width: 25,
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'GGL',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '450.78',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '12.34%',
+                    style: TextStyle(color: Colors.greenAccent),
+                  ),
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.blueGrey[500],
+                    child: FlatButton(
+                        onPressed: () {
+                          print('oops');
+                        },
+                        child: Text('BUY')),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blueGrey[800],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image(
-                  image: AssetImage('images/google.png'),
-                  width: 25,
-                  height: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'GGL',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '450.78',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  '12.34%',
-                  style: TextStyle(color: Colors.greenAccent),
-                ),
-                Icon(
-                  Icons.arrow_upward,
-                  color: Colors.greenAccent,
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Container(
-                  color: Colors.blueGrey,
-                  child: FlatButton(
-                      onPressed: () {
-                        print('oops');
-                      },
-                      child: Text('BUY')),
-                )
-              ],
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey[800],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('images/google.png'),
+                    width: 25,
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'GGL',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '450.78',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '12.34%',
+                    style: TextStyle(color: Colors.greenAccent),
+                  ),
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.blueGrey,
+                    child: FlatButton(
+                        onPressed: () {
+                          print('oops');
+                        },
+                        child: Text('BUY')),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blueGrey[800],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image(
-                  image: AssetImage('images/google.png'),
-                  width: 25,
-                  height: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'GGL',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '450.78',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  '12.34%',
-                  style: TextStyle(color: Colors.greenAccent),
-                ),
-                Icon(
-                  Icons.arrow_upward,
-                  color: Colors.greenAccent,
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Container(
-                  color: Colors.blueGrey[500],
-                  child: FlatButton(
-                      onPressed: () {
-                        print('oops');
-                      },
-                      child: Text('BUY')),
-                )
-              ],
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey[800],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('images/google.png'),
+                    width: 25,
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'GGL',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '450.78',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '12.34%',
+                    style: TextStyle(color: Colors.greenAccent),
+                  ),
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.blueGrey[500],
+                    child: FlatButton(
+                        onPressed: () {
+                          print('oops');
+                        },
+                        child: Text('BUY')),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blueGrey[800],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image(
-                  image: AssetImage('images/google.png'),
-                  width: 25,
-                  height: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'GGL',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '450.78',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  '12.34%',
-                  style: TextStyle(color: Colors.greenAccent),
-                ),
-                Icon(
-                  Icons.arrow_upward,
-                  color: Colors.greenAccent,
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Container(
-                  color: Colors.blueGrey[500],
-                  child: FlatButton(
-                      onPressed: () {
-                        print('oops');
-                      },
-                      child: Text('BUY')),
-                )
-              ],
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey[800],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('images/google.png'),
+                    width: 25,
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'GGL',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '450.78',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '12.34%',
+                    style: TextStyle(color: Colors.greenAccent),
+                  ),
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.blueGrey[500],
+                    child: FlatButton(
+                        onPressed: () {
+                          print('oops');
+                        },
+                        child: Text('BUY')),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

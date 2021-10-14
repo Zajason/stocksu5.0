@@ -13,6 +13,11 @@ Future<bool> signIn(String email, String password) async {
 }
 
 Future<bool> Register(String email, String password) async {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  if (user != null && !user.emailVerified) {
+    await user.sendEmailVerification();
+  }
   try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
