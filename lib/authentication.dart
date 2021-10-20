@@ -22,7 +22,7 @@ class _AuthenticationState extends State<Authentication> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(color: Colors.blueGrey[800]),
+        decoration: BoxDecoration(color: Colors.white),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -30,13 +30,13 @@ class _AuthenticationState extends State<Authentication> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width / 1.25,
                 child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                   controller: _emailfield,
                   decoration: InputDecoration(
                       hintText: 'example@email.com',
-                      hintStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.black),
                       labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.white)),
+                      labelStyle: TextStyle(color: Colors.black)),
                 ),
               ),
             ),
@@ -44,21 +44,21 @@ class _AuthenticationState extends State<Authentication> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width / 1.25,
                 child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                   controller: _passwordfield,
                   obscureText: true,
                   decoration: InputDecoration(
                       hintText: 'password',
-                      hintStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.black),
                       labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.white)),
+                      labelStyle: TextStyle(color: Colors.black)),
                 ),
               ),
             ),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
-                color: Colors.white,
+                color: Colors.deepPurpleAccent,
               ),
               width: MediaQuery.of(context).size.width / 1.4,
               child: MaterialButton(
@@ -77,7 +77,7 @@ class _AuthenticationState extends State<Authentication> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
-                color: Colors.white,
+                color: Colors.deepPurpleAccent,
               ),
               width: MediaQuery.of(context).size.width / 1.4,
               child: MaterialButton(
