@@ -1,11 +1,12 @@
 import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:stocksu/signIn.dart';
-import 'package:stocksu/signUp.dart';
-import 'package:stocksu/stock_row.dart';
+import 'package:stocksu/models/stockList.dart';
+import 'signIn.dart';
+import 'signUp.dart';
+import '../models/stock_row.dart';
 import 'dart:math';
-
+import 'package:stocksu/models/stockList.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,22 +14,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  return runApp(
-    MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-            title: Text('MOST POPULAR'),
-            backgroundColor: Colors.deepPurpleAccent,
-            centerTitle: true),
-        body: SignIn(),
-        backgroundColor: Colors.white,
-      ),
-    ),
-  );
+  return runApp(MaterialApp(
+    home: MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.white,
+          appBarTheme: AppBarTheme(color: Colors.deepPurpleAccent),
+          buttonTheme: ButtonThemeData(
+            buttonColor: Colors.deepPurpleAccent,
+          ),
+          canvasColor: Colors.white,
+          dividerColor: Colors.deepPurpleAccent,
+          scaffoldBackgroundColor: Colors.white,
+        ),
+        home: SignIn()),
+  ));
 }
 
 class MainUI extends StatefulWidget {
-  const MainUI({Key? key}) : super(key: key);
+  MainUI({Key? key}) : super(key: key);
+
   @override
   _MainUIState createState() => _MainUIState();
 }
@@ -46,48 +50,30 @@ class _MainUIState extends State<MainUI> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lets make some money'),
-        backgroundColor: Colors.deepPurpleAccent,
       ),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              color: Colors.white60,
-              alignment: Alignment.topLeft,
-              child: Row(children: <Widget>[
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 11,
-                ),
-                Text(
-                  'stock',
-                  style: TextStyle(
-                    color: Colors.black,
-                    height: MediaQuery.of(context).size.height / 200,
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 20,
-                ),
-                Text('price',
-                    style: TextStyle(
-                      color: Colors.black,
-                      height: MediaQuery.of(context).size.height / 200,
-                    )),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 10,
-                ),
-                Text(
-                  "change",
-                  style: TextStyle(
-                    color: Colors.black,
-                    height: MediaQuery.of(context).size.height / 200,
-                  ),
-                )
-              ]),
+
+            SizedBox(
+              height: 20,
+              child: Divider(),
             ),
             SizedBox(
-              height: 3.0,
-              child: Divider(color: Colors.deepPurpleAccent),
+              height: 75,
+              width: MediaQuery.of(context).size.width,
+              child: TextField(
+                decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.black),
+                    hintText: "Search",
+                    prefix: Icon(Icons.search),
+                    fillColor: Colors.grey[300],
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 0, style: BorderStyle.none),
+                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                    )),
+              ),
             ),
             StockRow(
                 icon: Icons.arrow_downward,
@@ -99,10 +85,8 @@ class _MainUIState extends State<MainUI> {
                 price: "566.67",
                 imageName: "images/microsoft.png"),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 200,
-              child: Divider(
-                color: Colors.deepPurpleAccent,
-              ),
+              height: MediaQuery.of(context).size.height / 100,
+              child: Divider(),
             ),
             StockRow(
                 icon: Icons.arrow_downward,
@@ -115,9 +99,7 @@ class _MainUIState extends State<MainUI> {
                 imageName: "images/tesla.png"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 200,
-              child: Divider(
-                color: Colors.deepPurpleAccent,
-              ),
+              child: Divider(),
             ),
             StockRow(
                 icon: Icons.arrow_downward,
@@ -130,9 +112,7 @@ class _MainUIState extends State<MainUI> {
                 imageName: "images/facebook.png"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 200,
-              child: Divider(
-                color: Colors.deepPurpleAccent,
-              ),
+              child: Divider(),
             ),
             StockRow(
                 icon: Icons.arrow_downward,
@@ -145,9 +125,7 @@ class _MainUIState extends State<MainUI> {
                 imageName: "images/apple.png"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 200,
-              child: Divider(
-                color: Colors.deepPurpleAccent,
-              ),
+              child: Divider(),
             ),
             StockRow(
                 icon: Icons.arrow_downward,
@@ -160,9 +138,7 @@ class _MainUIState extends State<MainUI> {
                 imageName: "images/google.png"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 200,
-              child: Divider(
-                color: Colors.deepPurpleAccent,
-              ),
+              child: Divider(),
             ),
             StockRow(
                 icon: Icons.arrow_downward,
@@ -175,9 +151,7 @@ class _MainUIState extends State<MainUI> {
                 imageName: "images/microsoft.png"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 200,
-              child: Divider(
-                color: Colors.deepPurpleAccent,
-              ),
+              child: Divider(),
             ),
             StockRow(
                 icon: Icons.arrow_downward,
@@ -190,9 +164,7 @@ class _MainUIState extends State<MainUI> {
                 imageName: "images/microsoft.png"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 200,
-              child: Divider(
-                color: Colors.deepPurpleAccent,
-              ),
+              child: Divider(),
             ),
             StockRow(
                 icon: Icons.arrow_upward,
@@ -205,9 +177,7 @@ class _MainUIState extends State<MainUI> {
                 imageName: "images/microsoft.png"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 200,
-              child: Divider(
-                color: Colors.deepPurpleAccent,
-              ),
+              child: Divider(),
             ),
             StockRow(
                 icon: Icons.arrow_downward,

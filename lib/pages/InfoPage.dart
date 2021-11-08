@@ -1,10 +1,11 @@
 import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:stocksu/signIn.dart';
-import 'package:stocksu/signUp.dart';
-import 'package:stocksu/stock_row.dart';
+import 'signIn.dart';
+import 'signUp.dart';
+import '../models/stock_row.dart';
 import 'dart:math';
+import 'main.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,12 +39,12 @@ class _InfoPageState extends State<InfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Theme.of(context).accentColor,
       ),
       body: SafeArea(
         child: Expanded(
           child: Container(
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
             child: Column(
               children: <Widget>[
                 SizedBox(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:stocksu/InfoPage.dart';
-import 'package:stocksu/main.dart';
+import '../pages/InfoPage.dart';
+import '../pages/main.dart';
+import '../pages/main.dart';
+import 'stock.dart';
 
 class StockRow extends StatefulWidget {
   final String price;
@@ -31,7 +33,6 @@ class _StockRowState extends State<StockRow> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        color: Colors.white60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -75,10 +76,10 @@ class _StockRowState extends State<StockRow> {
               width: MediaQuery.of(context).size.width / 4.5,
               height: MediaQuery.of(context).size.height / 16,
               decoration: BoxDecoration(
-                color: Colors.deepPurpleAccent,
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: FlatButton(
+                  color: Colors.deepPurpleAccent,
                   child: Text('BUY'),
                   // Within the `FirstRoute` widget
                   onPressed: () {
